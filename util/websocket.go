@@ -1,6 +1,7 @@
 package util
 
 import (
+	"bytes"
 	"crypto/tls"
 	"encoding/json"
 	"log"
@@ -39,7 +40,12 @@ func InitWS() error {
 				log.Println("recv error:", err)
 				return
 			} else {
-				log.Printf("recv: %s", message)
+				var prettyJSON bytes.Buffer
+				err = json.Indent(&prettyJSON, message, "", "    ")
+				if err != nil {
+					log.Printf("recv: %s", string(message))
+				}
+				log.Printf("recv: %s", string(prettyJSON.Bytes()))
 				// onMessage(message)
 			}
 		}

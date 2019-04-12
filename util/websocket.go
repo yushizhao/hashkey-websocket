@@ -18,13 +18,13 @@ func InitWS() error {
 
 	//c, _, err = websocket.DefaultDialer.Dial(u.String(), nil)
 	dialer := websocket.Dialer{TLSClientConfig: &tls.Config{RootCAs: nil, InsecureSkipVerify: true}}
-	c, _, err = dialer.Dial(u.String(), nil)
+	c, _, err = dialer.Dial(baseURL, nil)
 
 	if err != nil {
 		log.Fatal("dial:", err)
 		return err
 	} else {
-		log.Printf("connecting to %s", u.String())
+		log.Printf("connecting to %s", baseURL)
 	}
 
 	SubPrivate()

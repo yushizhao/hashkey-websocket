@@ -3,7 +3,6 @@ package util
 import (
 	"encoding/json"
 	"io/ioutil"
-	"net/url"
 	"os"
 )
 
@@ -19,7 +18,7 @@ var (
 	authType string
 	path     string
 	hmacStr  string
-	u        url.URL
+	baseURL  string
 )
 
 func Init(configPath *string) error {
@@ -39,7 +38,6 @@ func Init(configPath *string) error {
 	authType = "HMAC"
 	path = "/APITradeWS/v1/messages"
 	hmacStr = SHA256HMAC([]byte("WSS/APITradeWS/v1/messages"), config.SecretKey)
-	u = url.URL{Scheme: "wss", Host: config.Host, Path: path}
-
+	baseURL = config.Host + path
 	return nil
 }
